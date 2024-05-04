@@ -16,7 +16,12 @@ function App() {
   const fetchCountries = () => {
     try{
     fetch('https://crio-location-selector.onrender.com/countries')
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch countries');
+        }
+        return response.json();
+      })
       .then(data => setCountries(data));
     }catch(err){
       console.error(err);
@@ -26,7 +31,12 @@ function App() {
   const fetchStates = (country) => {
     try{
     fetch(`https://crio-location-selector.onrender.com/country=${country}/states`)
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch countries');
+        }
+        return response.json();
+      })
       .then(data => setStates(data));
     }catch(err){
       console.error(err);  
@@ -36,7 +46,12 @@ function App() {
   const fetchCities = (country, state) => {
     try{
     fetch(`https://crio-location-selector.onrender.com/country=${country}/state=${state}/cities`)
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch countries');
+        }
+        return response.json();
+      })
       .then(data => setCities(data));
     }catch(err){
       console.error(err);
