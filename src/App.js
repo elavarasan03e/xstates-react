@@ -14,34 +14,62 @@ function App() {
   }, []);
 
   const fetchCountries = () => {
-    try{
-    fetch('https://crio-location-selector.onrender.com/countries')
-      .then(response => response.json())
-      .then(data => setCountries(data));
-    }catch(err){
+    try {
+      fetch('https://crio-location-selector.onrender.com/countries')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Failed to fetch countries');
+          }
+          return response.json();
+        })
+        .then(data => setCountries(data))
+        .catch(error => {
+          console.error('Error fetching countries:', error);
+          setCountries([]);
+        });
+    } catch (err) {
       console.error(err);
     }
   }
-
+  
   const fetchStates = (country) => {
-    try{
-    fetch(`https://crio-location-selector.onrender.com/country=${country}/states`)
-      .then(response => response.json())
-      .then(data => setStates(data));
-    }catch(err){
+    try {
+      fetch(`https://crio-location-selector.onrender.com/country=${country}/states`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Failed to fetch states');
+          }
+          return response.json();
+        })
+        .then(data => setStates(data))
+        .catch(error => {
+          console.error('Error fetching states:', error);
+          setStates([]);
+        });
+    } catch (err) {
       console.error(err);
     }
   }
-
+  
   const fetchCities = (country, state) => {
-    try{
-    fetch(`https://crio-location-selector.onrender.com/country=${country}/state=${state}/cities`)
-      .then(response => response.json())
-      .then(data => setCities(data));
-    }catch(err){
+    try {
+      fetch(`https://crio-location-selector.onrender.com/country=${country}/state=${state}/cities`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Failed to fetch cities');
+          }
+          return response.json();
+        })
+        .then(data => setCities(data))
+        .catch(error => {
+          console.error('Error fetching cities:', error);
+          setCities([]);
+        });
+    } catch (err) {
       console.error(err);
     }
   }
+  
 
   const handleCountryChange = (event) => {
     const country = event.target.value;
@@ -98,4 +126,5 @@ function App() {
 }
 
 export default App;
+
 
