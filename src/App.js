@@ -13,55 +13,45 @@ function App() {
     fetchCountries();
   }, []);
 
- const fetchCountries = () => {
+  const fetchCountries = () => {
+    try{
     fetch('https://crio-location-selector.onrender.com/countries')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch countries');
-        }
-        return response.json();
-      })
-      .then(data => setCountries(data))
-      .catch(error => setError(error.message));
+      .then(response => response.json())
+      .then(data => setCountries(data));
+    }catch(err){
+      console.error(err);
+    }
   }
 
   const fetchStates = (country) => {
+    try{
     fetch(`https://crio-location-selector.onrender.com/country=${country}/states`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch states');
-        }
-        return response.json();
-      })
-      .then(data => setStates(data))
-      .catch(error => setError(error.message));
+      .then(response => response.json())
+      .then(data => setStates(data));
+    }catch(err){
+      console.error(err);
+    }
   }
 
   const fetchCities = (country, state) => {
+    try{
     fetch(`https://crio-location-selector.onrender.com/country=${country}/state=${state}/cities`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch cities');
-        }
-        return response.json();
-      })
-      .then(data => setCities(data))
-      .catch(error => setError(error.message));
+      .then(response => response.json())
+      .then(data => setCities(data));
+    }catch(err){
+      console.error(err);
+    }
   }
-
 
   const handleCountryChange = (event) => {
     const country = event.target.value;
     setSelectedCountry(country);
-    setSelectedState('');
-    setSelectedCity('');
     fetchStates(country);
   }
 
   const handleStateChange = (event) => {
     const state = event.target.value;
     setSelectedState(state);
-    setSelectedCity('');
     fetchCities(selectedCountry, state);
   }
 
@@ -108,3 +98,4 @@ function App() {
 }
 
 export default App;
+
